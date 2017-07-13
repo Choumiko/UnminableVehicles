@@ -14,4 +14,11 @@ data:extend({
         default_value = true,
         order = "unminable_vehicles-b"
     },
+    {
+        type = "bool-setting",
+        name = prefix .. "prevent_rotation",
+        setting_type = "runtime-global",
+        default_value = true,
+        order = "unminable_vehicles-c"
+    },
 })
