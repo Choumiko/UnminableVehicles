@@ -9,3 +9,7 @@ Adds admin options to
  - /unminable_vehicles_set_teleport : Sets the teleport location to your current position. Can only be used by admins
  - /unminable_vehicles_enable_movement : Reenables movement for stuck players. Can be used by any player (if only 1 player is online)
 
+# Changelog
+
+0.0.1
+ - initial release
