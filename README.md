@@ -11,5 +11,8 @@ Adds admin options to
 
 # Changelog
 
+0.0.2
+ - fixed potential desync
+
 0.0.1
  - initial release

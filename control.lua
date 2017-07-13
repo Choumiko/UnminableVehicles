@@ -139,7 +139,7 @@ events.on_tick = function(_)
                 end
             end
         else
-            script.on_event(defines.events.on_tick, nil)
+            conditional_events()
         end
     end)
     if err then
