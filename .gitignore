@@ -1,0 +1,6 @@
+build
+build/*
+factorio_mods
+*.iml
+/.buildpath
+/.project

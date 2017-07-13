@@ -1,0 +1,9 @@
+{
+  "name": "UnminableVehicles",
+  "version": "0.0.1",
+  "title": "Unminable vehicles",
+  "author": "Choumiko",  
+  "homepage": "https://github.com/Choumiko/UnminableVehicles",
+  "description": "Makes vehicles unminable or teleports players to spawn after mining a vehicle.\nTeleported players can't move until they are killed",
+  "factorio_version": "0.15"
+}
