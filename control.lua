@@ -61,6 +61,9 @@ events.on_player_mined_entity = function(event)
     local _, err = pcall(function()
         if types[event.entity.type] then
             local player = game.players[event.player_index]
+            if player.vehicle and player.vehicle.valid then
+                player.vehicle.passenger = nil
+            end
             local text = "%s mined a vehicle!"
             if teleport_player(player) then
                 text = text .. " Somehow he got teleported to spawn."
