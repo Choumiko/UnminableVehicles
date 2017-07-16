@@ -11,6 +11,10 @@ Adds admin options to
 
 # Changelog
 
+0.0.3
+ - prevent teleported players from building and entering a vehicle
+ - removed "forgotten" debug code
+ 
 0.0.2
  - fixed potential desync
 

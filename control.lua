@@ -40,10 +40,14 @@ local function conditional_events()
             --log("Registered events")
             script.on_event(defines.events.on_tick, events.on_tick)
             script.on_event(defines.events.on_player_died, events.on_player_died)
+            script.on_event(defines.events.on_player_cursor_stack_changed, events.on_cursor_stack_changed)
+            script.on_event(defines.events.on_player_driving_changed_state, events.on_player_driving_changed_state)
         else
             --log("Unregistered events")
             script.on_event(defines.events.on_tick, nil)
             script.on_event(defines.events.on_player_died, nil)
+            script.on_event(defines.events.on_player_cursor_stack_changed, nil)
+            script.on_event(defines.events.on_player_driving_changed_state, nil)
         end
     end)
     if err then
@@ -148,6 +152,39 @@ events.on_tick = function(_)
     end
 end
 
+events.on_cursor_stack_changed = function(event)
+    local _, err = pcall(function()
+        if table_size(global.teleported_players) > 0 and global.teleported_players[event.player_index] then
+            local player = game.players[event.player_index]
+            if player.cursor_stack.valid_for_read then
+                player.print("You can't build while waiting for punishment.")
+                player.clean_cursor()
+            end
+        else
+            conditional_events()
+        end
+    end)
+    if err then
+        log("Unminable vehicles: Error occured")
+        log(serpent.block(err))
+    end
+end
+
+events.on_player_driving_changed_state = function(event)
+    local _, err = pcall(function()
+        local player = game.players[event.player_index]
+        if global.teleported_players[player.index] and player.vehicle  and player.vehicle.valid then
+            player.force.print(string.format("Oh come on %s, trying to get into a vehicle while waiting for punishment? Don't be a chicken!", player.name))
+            player.vehicle.passenger = nil
+            teleport_player(player)
+        end
+    end)
+    if err then
+        log("Unminable vehicles: Error occured")
+        log(serpent.block(err))
+    end
+end
+
 local function update_vehicles(unminable)
     local _, err = pcall(function()
         for _, surface in pairs(game.surfaces) do
@@ -190,6 +227,7 @@ script.on_configuration_changed(function()
     local _, err = pcall(function()
         init_global()
         conditional_events()
+        update_vehicles(not settings.global["unminable_vehicles_make_unminable"].value)
     end)
     if err then
         log("Unminable vehicles: Error occured")
@@ -221,7 +259,7 @@ end)
 
 local function set_teleport_location(event)
     local player = game.players[event.player_index]
-    if player.admin or player.name == "Choumiko" then
+    if player.admin then
         global.teleport_location = game.player.position
         player.force.print(string.format("Set teleport location to %s", Position.tostring(player.position)))
     else
@@ -231,7 +269,7 @@ end
 
 local function clear_teleported_players(event)
     local player = game.players[event.player_index]
-    if player.admin or player.name == "Choumiko" or table_size(game.connected_players) == 1 then
+    if player.admin or table_size(game.connected_players) == 1 then
         global.teleported_players = {}
     end
 end
