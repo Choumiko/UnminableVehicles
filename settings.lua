@@ -21,4 +21,11 @@ data:extend({
         default_value = true,
         order = "unminable_vehicles-c"
     },
+    {
+        type = "bool-setting",
+        name = prefix .. "allow_shooting",
+        setting_type = "runtime-global",
+        default_value = false,
+        order = "unminable_vehicles-d"
+    },
 })

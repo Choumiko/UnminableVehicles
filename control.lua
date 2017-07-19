@@ -58,6 +58,7 @@ end
 
 local function teleport_player(player)
     local position = player.surface.find_non_colliding_position("player", global.teleport_location, 10, 0.2)
+
     return player.teleport(position)
 end
 
@@ -138,8 +139,13 @@ events.on_tick = function(_)
     local _, err = pcall(function()
         if table_size(global.teleported_players) > 0 then
             for index, position in pairs(global.teleported_players) do
-                if Position.distance(position, game.players[index].position) > 0 then
-                    game.players[index].walking_state = {walking = false, direction = game.players[index].walking_state.direction}
+                local player = game.players[index]
+                if Position.distance(position, player.position) > 0 then
+                    player.walking_state = {walking = false, direction = player.walking_state.direction}
+                end
+                player.mining_state = {state = false}
+                if not settings.global["unminable_vehicles_allow_shooting"].value then
+                    player.shooting_state = {state = false, position = player.shooting_state.position}
                 end
             end
         else

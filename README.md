@@ -12,6 +12,8 @@ Adds admin options to
 # Changelog
 0.0.4
  - fixed fluid wagons being minable without consequences
+ - teleported players can't mine
+ - added option to disallow shooting while waiting for punishment
 
 0.0.3
  - prevent teleported players from building and entering a vehicle
