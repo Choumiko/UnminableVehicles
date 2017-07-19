@@ -1,5 +1,5 @@
 local Position = require 'stdlib/area/position'
-local types = {car = true, locomotive = true, ["cargo-wagon"] = true}
+local types = {car = true, locomotive = true, ["cargo-wagon"] = true, ["fluid-wagon"] = true}
 
 local function init_global()
     local _, err = pcall(function()
