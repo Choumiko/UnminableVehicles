@@ -10,6 +10,10 @@ Adds admin options to
  - /unminable_vehicles_enable_movement : Reenables movement for stuck players. Can be used by any player (if only 1 player is online)
 
 # Changelog
+0.0.5
+
+ - Messages will also be sent to ChatToFile 
+ 
 0.0.4
  - fixed fluid wagons being minable without consequences
  - teleported players can't mine

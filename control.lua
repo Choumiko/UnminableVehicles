@@ -62,6 +62,13 @@ local function teleport_player(player)
     return player.teleport(position)
 end
 
+local function print_message(force, msg)
+    force.print(msg)
+    if remote.interfaces.ChatToFile and remote.interfaces.ChatToFile.chat then --luacheck: ignore
+        remote.call("ChatToFile", "chat", msg)
+    end
+end
+
 events.on_player_mined_entity = function(event)
     local _, err = pcall(function()
         if types[event.entity.type] then
@@ -73,10 +80,11 @@ events.on_player_mined_entity = function(event)
             if teleport_player(player) then
                 text = text .. " Somehow he got teleported to spawn."
             else
-                player.force.print(string.format("Couldn't teleport %s", player.name))
+                local t = string.format("Couldn't teleport %s", player.name)
+                print_message(player.force, t)
             end
-            player.force.print(string.format(text, player.name))
-            player.force.print(string.format("The vehicle makes %s so heavy that he can't move. Lets put him out of this misery", player.name))
+            print_message(player.force, string.format(text, player.name))
+            print_message(player.force, string.format("The vehicle makes %s so heavy that he can't move. Lets put him out of this misery", player.name))
             global.teleported_players[player.index] = player.position
             conditional_events()
         end
@@ -95,10 +103,10 @@ events.on_player_rotated_entity = function(event)
             if teleport_player(player) then
                 text = text .. " Somehow he got teleported to spawn."
             else
-                player.force.print(string.format("Couldn't teleport %s", player.name))
+                print_message(player.force, string.format("Couldn't teleport %s", player.name))
             end
-            player.force.print(string.format(text, player.name))
-            player.force.print(string.format("For mysterious reasons he can't move. Lets put him out of this misery", player.name))
+            print_message(player.force, string.format(text, player.name))
+            print_message(player.force, string.format("For mysterious reasons he can't move. Lets put him out of this misery", player.name))
             global.teleported_players[player.index] = player.position
             conditional_events()
         end
@@ -180,7 +188,7 @@ events.on_player_driving_changed_state = function(event)
     local _, err = pcall(function()
         local player = game.players[event.player_index]
         if global.teleported_players[player.index] and player.vehicle  and player.vehicle.valid then
-            player.force.print(string.format("Oh come on %s, trying to get into a vehicle while waiting for punishment? Don't be a chicken!", player.name))
+            print_message(player.force, string.format("Oh come on %s, trying to get into a vehicle while waiting for punishment? Don't be a chicken!", player.name))
             player.vehicle.passenger = nil
             teleport_player(player)
         end
