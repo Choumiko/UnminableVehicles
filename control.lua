@@ -57,7 +57,8 @@ local function conditional_events()
 end
 
 local function teleport_player(player)
-    local position = player.surface.find_non_colliding_position("player", global.teleport_location, 10, 0.2)
+    local name = game.active_mods.base < '0.17.35' and "player" or "character" --TODO remove in a while
+    local position = player.surface.find_non_colliding_position(name, global.teleport_location, 10, 0.2)
 
     return player.teleport(position)
 end
