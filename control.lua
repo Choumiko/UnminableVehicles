@@ -1,5 +1,5 @@
 local Position = require 'stdlib/area/position'
-local types = {car = true, locomotive = true, ["cargo-wagon"] = true, ["fluid-wagon"] = true}
+local types = {car = true, locomotive = true, ["cargo-wagon"] = true, ["fluid-wagon"] = true, ["artillery-wagon"] = true}
 
 local function init_global()
     local _, err = pcall(function()
@@ -32,8 +32,10 @@ local function conditional_events()
 
         if unminable then
             script.on_event(defines.events.on_built_entity, events.on_built_entity)
+            script.on_event(defines.events.script_raised_built, events.script_raised_built)
         else
             script.on_event(defines.events.on_built_entity, nil)
+            script.on_event(defines.events.script_raised_built, nil)
         end
 
         if table_size(global.teleported_players) > 0 then
@@ -57,8 +59,7 @@ local function conditional_events()
 end
 
 local function teleport_player(player)
-    local name = game.active_mods.base < '0.17.35' and "player" or "character" --TODO remove in a while
-    local position = player.surface.find_non_colliding_position(name, global.teleport_location, 10, 0.2)
+    local position = player.surface.find_non_colliding_position("character", global.teleport_location, 10, 0.2)
 
     return player.teleport(position)
 end
@@ -128,6 +129,10 @@ events.on_built_entity = function(event)
         log("Unminable vehicles: Error occured")
         log(serpent.block(err))
     end
+end
+
+events.script_raised_built = function(event)
+    events.on_built_entity({created_entity = event.entity})
 end
 
 events.on_player_died = function(event)
