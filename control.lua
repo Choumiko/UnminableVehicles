@@ -1,4 +1,3 @@
-local Position = require 'stdlib/area/position'
 local types = {car = true, locomotive = true, ["cargo-wagon"] = true, ["fluid-wagon"] = true, ["artillery-wagon"] = true}
 
 local function init_global()
@@ -154,7 +153,10 @@ events.on_tick = function(_)
         if table_size(global.teleported_players) > 0 then
             for index, position in pairs(global.teleported_players) do
                 local player = game.players[index]
-                if Position.distance(position, player.position) > 0 then
+                local player_pos = player.position
+                local axbx = position.x - player_pos.x
+                local ayby = position.y - player_pos.y
+                if axbx * axbx + ayby * ayby > 0 then
                     player.walking_state = {walking = false, direction = player.walking_state.direction}
                 end
                 player.mining_state = {state = false}
@@ -281,7 +283,8 @@ local function set_teleport_location(event)
     local player = game.players[event.player_index]
     if player.admin then
         global.teleport_location = game.player.position
-        player.force.print(string.format("Set teleport location to %s", Position.tostring(player.position)))
+        local player_pos = player.position
+        player.force.print("Set teleport location to {" .. player_pos.x .. ", " .. player_pos.y .. "}")
     else
         player.print("Need to be admin to set the teleport location")
     end
