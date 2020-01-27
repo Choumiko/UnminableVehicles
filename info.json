@@ -1,9 +1,9 @@
 {
   "name": "UnminableVehicles",
-  "version": "2.0.3",
+  "version": "3.0.1",
   "title": "Uncle Shred's unminable vehicles",
   "author": "Choumiko",
   "homepage": "https://github.com/Choumiko/UnminableVehicles",
   "description": "Makes vehicles unminable or teleports players to spawn after mining/rotating a vehicle.\nTeleported players can't move until they are killed",
-  "factorio_version": "0.17"
+  "factorio_version": "0.18"
 }
