@@ -180,7 +180,7 @@ events.on_cursor_stack_changed = function(event)
             local player = game.players[event.player_index]
             if player.cursor_stack.valid_for_read then
                 player.print("You can't build while waiting for punishment.")
-                player.clean_cursor()
+                player.clear_cursor()
             end
         else
             conditional_events()
