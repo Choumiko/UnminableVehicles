@@ -5,27 +5,36 @@ data:extend({
         name = prefix .. "make_unminable",
         setting_type = "runtime-global",
         default_value = false,
-        order = "unminable_vehicles-a"
+        order = "a"
+    },
+    {
+        type = "double-setting",
+        name = prefix .. "mine_ingredients",
+        setting_type = "runtime-global",
+        default_value = 0,
+        minimum_value = 0,
+        maximum_value = 1,
+        order = "b"
     },
     {
         type = "bool-setting",
         name = prefix .. "teleport_players",
         setting_type = "runtime-global",
         default_value = true,
-        order = "unminable_vehicles-b"
+        order = "c"
     },
     {
         type = "bool-setting",
         name = prefix .. "prevent_rotation",
         setting_type = "runtime-global",
         default_value = true,
-        order = "unminable_vehicles-c"
+        order = "d"
     },
     {
         type = "bool-setting",
         name = prefix .. "allow_shooting",
         setting_type = "runtime-global",
         default_value = false,
-        order = "unminable_vehicles-d"
+        order = "e"
     },
 })

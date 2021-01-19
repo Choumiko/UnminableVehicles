@@ -2,6 +2,8 @@
 Version: 4.0.1
 Date: ????
   Changes:
+    - Prevent spidertrons from being mined
+    - Added an option to return ingredients when mining vehicles
 ---------------------------------------------------------------------------------------------------
 Version: 4.0.0
 Date: 2020-11-23
